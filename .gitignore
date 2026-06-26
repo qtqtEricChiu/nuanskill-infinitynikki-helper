@@ -1,0 +1,19 @@
+# 运行时缓存（Chrome Profile、截图等临时文件）
+Cache/
+
+# 个人用户数据（Cookie、抽卡统计、会话数据等）
+user-data/
+
+# PowerShell 执行策略文件
+*.ps1xml
+
+# 临时文件
+*.tmp
+*.bak
+*.log
+
+# IDE 文件
+.vscode/
+.idea/
+*.swp
+*.swo

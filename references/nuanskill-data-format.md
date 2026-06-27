@@ -6,30 +6,68 @@
 
 ---
 
-## nuan_user_profile.json（[通用] Cookie 凭据）
+## nuan_cookie_nuanpaper.json（[通用] nuanpaper.com Cookie 凭据）
+
+按子域名分组存储，每个子域名下以时间戳命名条目。**只能增补，严禁覆写或删除已有条目**。
 
 ```json
 {
-  "current": {
-    "cookies": {
-      "momoToken": "字符串",
-      "momoOpenid": "字符串",
-      "momoNid": "字符串",
-      "momoVisitor": "字符串"
+  "myl": {
+    "subdomain": "myl.nuanpaper.com",
+    "note": "奇想手账（通用），cookies只能增补，严禁覆写删除",
+    "current_YY-MM-DD": {
+      "cookies": {
+        "momoToken": "字符串",
+        "momoOpenid": "字符串",
+        "momoNid": "字符串",
+        "momoVisitor": "字符串"
+      }
+    },
+    "previous_YY-MM-DD": {
+      "cookies": { ... }
+    },
+    "previous_YY-MM-DD_1": {
+      "cookies": { ... }
     }
   },
-  "previous": {
-    "cookies": {
-      "momoToken": "字符串",
-      "momoOpenid": "字符串",
-      "momoNid": "字符串",
-      "momoVisitor": "字符串"
+  "support": {
+    "subdomain": "support-infinitynikki.nuanpaper.com",
+    "note": "客服中心（nuanpaper）（能力⑤），cookies只能增补，严禁覆写删除",
+    "current_YY-MM-DD": {
+      "cookies": {
+        "momoToken": "字符串",
+        "momoOpenid": "字符串",
+        "momoNid": "字符串",
+        "momoVisitor": "字符串",
+        "aliyungf_tc_myl": "字符串（可选）",
+        "aliyungf_tc_support": "字符串（可选）"
+      }
     }
   }
 }
 ```
 
-> `current` 存放最新 cookies，`previous` 保留上一组（用于回退）。历史 cookies 不删除，新登录后将旧值移入 `previous`。
+> 命名规则：`current_` / `previous_` + 日期（YY-MM-DD）。若同一日期有多条，追加 `_1`、`_2` 后缀。**新增条目时绝对不可覆写或删除旧条目**。
+>
+> `myl` 子域名：奇想手账通用 Cookie（能力②③④共用）。
+> `support` 子域名：客服中心 Cookie（能力⑤使用）。
+>
+---
+
+## nuan_cookie_papegames.json（[通用] papegames.com Cookie 凭据）
+
+暂不分子域名，按时间戳直接存放。**只能增补，严禁覆写或删除已有条目**。
+
+```json
+{
+  "note": "cookies只能增补，严禁覆写删除",
+  "current_YY-MM-DD": {
+    "cookies": {}
+  }
+}
+```
+
+> 命名规则：`current_` / `previous_` + 日期（YY-MM-DD）。后续访问 papegames.com 域名后在此填充具体 cookie 字段。
 
 ---
 
@@ -173,3 +211,38 @@
 ```
 
 > `updated_at` 必须精确到分钟（`yyyy-MM-ddTHH:mm` 格式），`current` 和 `total` 全为数字类型。
+
+---
+
+## nuan_recharge_history.json（[能力⑤] 氪条消费历史）
+
+按查询时间戳分组存储，每次查询结果作为一条历史记录追加。**只能增补，严禁覆写或删除已有条目**。
+
+```json
+{
+  "note": "消费历史持久化存储，只能增补，严禁覆写删除",
+  "records": [
+    {
+      "queried_at": "2026-06-28T14:30:00（ISO 时间字符串）",
+      "query_range": "最近6个月（或用户指定范围如最近1个月/3个月）",
+      "total_amount_yuan": "汇总金额（数字，单位元）",
+      "order_count": "订单笔数（数字）",
+      "orders": [
+        {
+          "order_id": "订单 ID（字符串）",
+          "item_name": "道具名称（字符串）",
+          "recharge_time": "充值时间（字符串，如'2026-03-03 01:31:55'）",
+          "amount_yuan": "充值金额（数字，单位元）"
+        }
+      ]
+    }
+  ]
+}
+```
+
+> **关键规则**：
+> - 每次用户查询氪条时，将本次查询结果（含所有订单明细）**追加**到 `records` 数组末尾，**严禁覆写或删除已有记录**
+> - `queried_at` 为本次查询发生的精确时间（ISO 格式）
+> - `query_range` 记录查询的时间范围（如"最近6个月"），用于区分不同查询
+> - 若同一时间范围重复查询（如用户多次查询同一区间），每次均追加新记录，不可覆盖旧记录
+> - 若查询结果为空（无充值记录），仍需追加一条 `order_count: 0`、`orders: []` 的记录，不可跳过

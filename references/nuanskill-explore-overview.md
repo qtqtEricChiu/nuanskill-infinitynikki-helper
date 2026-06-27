@@ -2,7 +2,7 @@
 
 > **能力编号**：能力③
 > **数据源**：https://myl.nuanpaper.com/tools/journal（探索总览标签页）
-> **依赖**：已登录的浏览器会话（cookie 见 user-data/nuan_user_profile.json）
+> **依赖**：已登录的浏览器会话（cookie 见 user-data/nuan_cookie_nuanpaper.json）
 
 ## 前置条件
 

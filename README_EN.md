@@ -15,11 +15,11 @@
 </p>
 
 <p align="center">
-  <em>Steam Version Management (ACF Anti-Update · SteamDB Auto-Detect · Skeletonize Cleanup) + Journal Monitor (Stamina · Digging · Gacha Stats · Exploration Progress)</em>
+  <em>Steam Version Management (ACF Anti-Update · SteamDB Auto-Detect · Skeletonize Cleanup) + Journal Tools (Stamina · Digging · Gacha Stats · Exploration Progress) + Public Info Query (Coupon Codes · Recharge History)</em>
 </p>
 
 <p align="center">
-  <sub>v1.2.0 · Windows 10/11 · Marvis / QClaw Tested · More Agents Adapting</sub>
+  <sub>v1.3.1 · Windows 10/11 · Marvis / QClaw Tested · More Agents Adapting</sub>
 </p>
 
 <p align="center">
@@ -35,6 +35,7 @@
   ▸ <strong>Steam Management</strong>: Forge ACF version info + auto-fetch latest BuildID/Manifest GID from SteamDB, one-click version sync<br />
   ▸ <strong>Space Cleanup</strong>: Skeletonize Steam shell directory, external X6Game backup, restorable anytime<br />
   ▸ <strong>Journal Tools</strong>: Stamina reminders, Digging progress, Gacha record queries, Exploration progress — all via natural language<br />
+  ▸ <strong>Public Info</strong>: Real-time coupon code query, Recharge history query (last 6 months order details)<br />
   ▸ <strong>WeChat Remote</strong>: Connect Marvis + WeChat Clawbot, operate from anywhere via WeChat<br />
   ▸ <strong>Zero Dependencies</strong>: Single-file PowerShell scripts, built-in config, no external file dependencies
 </p>
@@ -83,7 +84,7 @@ The Agent will automatically run diagnostics and report results.
 
 ## Installation
 
-> v1.2.0 has been tested on **Marvis** and **QClaw**. Other platforms are theoretically supported.
+> v1.3.1 has been tested on **Marvis** and **QClaw**. Other platforms are theoretically supported.
 
 ### First-Time Setup
 
@@ -169,6 +170,13 @@ Once the skill is imported, just talk to the Agent in natural language. Here are
 | Check exploration | "How many Whimstars have I collected?" |
 | Check regional collectibles | "How many Inspiration Dews left in [region]?" |
 
+### Public Info
+
+| What You Want | Say This |
+|---------------|----------|
+| Check coupon codes | "Any new coupon codes available?" |
+| Check recharge history | "How much have I spent? Check my recharge history." |
+
 ---
 
 ## Feature Details
@@ -243,6 +251,17 @@ Access the **Exploration Overview** tab (2nd tab) of the Journal to extract regi
 
 > **Data saving**: Each query auto-saves all exploration data to `user-data/nuan_explore_data.json`. Cache valid for 7 days, can be refreshed via scheduled tasks.
 
+### Public Info Query
+
+Retrieve public information from two different sources via Chrome (`Cache\chrome_temp_profile\`):
+
+| Feature | Data Source | Description |
+|---------|-------------|-------------|
+| Coupon Codes | Qiyu customer service page (no Cookie) | Auto-fetch currently valid coupon code list, rewards, and expiry info |
+| Recharge History | Support invoice page (Cookie required) | Query last 6 months of recharge order details, results persisted to file |
+
+> **Recharge history persistence**: Each query result is automatically appended to `user-data/nuan_recharge_history.json` — append-only, never overwrite. Full traceability of past queries.
+
 ---
 
 ## Script Command Reference
@@ -310,7 +329,7 @@ Stamina refill prediction + Digging completion time:
 | 4 | Script auto-creates `.bak` backups in `backups\` directory before modifying ACF |
 | 5 | Skeletonize is a same-drive NTFS move, very fast, but won't cross drives |
 | 6 | Re-run `steamdb-check` after each official update |
-| 7 | Re-login to Journal when cookies expire, update `user-data/nuan_user_profile.json` |
+| 7 | Re-login to Journal when cookies expire, update `user-data/nuan_cookie_nuanpaper.json` |
 | 8 | **First gacha crawl is slow**: 5-15 minutes to traverse all history. Data saved to `user-data/nuan_gacha_stats.json` afterwards — subsequent queries are instant |
 | 9 | **First-time manual login required**: Agent opens visible Chrome for Journal login (captcha included), then auto-extracts cookies |
 | 10 | **Scheduled task tip**: When creating auto-tasks (e.g., monthly gacha update), also update exploration data (`nuan_explore_data.json`) |
@@ -351,45 +370,9 @@ A: No open-source license declared yet. Published as a public GitHub repository 
 
 ## Changelog
 
-### v1.2.0 (2026-06-27)
+Full changelog available in `CHANGELOG.md`.
 
-- ✅ **New game knowledge base** — `references/nuanskill-game-knowledge.md`: dailies, gacha rules, world exploration, journal page structure
-- ✅ **Banner countdown support** — `current_banner_pool` in journal data, end-of-banner reminder template
-- ✅ **Full evolution rules** — `secondSuit.drawNum > 0` as the standard, documented in gacha-query + game-knowledge
-- ✅ **Limited banner complete rules** — Version cycles, rarity tiers, banner subtypes, item table, core rules
-- ✅ **Removed mandatory visible Chrome for localStorage** (headless confirmed working)
-- ✅ **Full references audit** — All 8 reference files cross-checked, no broken links
-- ✅ **Cleanup** — `nuan_session.json` and duplicate files removed
-
-### v1.1.1 (2026-06-27)
-
-### v1.1.0 (2026-06-27)
-
-- ✅ **New: Exploration Progress Query (Ability 3)** — Check warp spires, Whimstars, Inspiration Dews, and sub-region collectibles per region
-- ✅ New `references/nuanskill-explore-overview.md` — Exploration overview execution guide
-- ✅ New `user-data/nuan_explore_data.json` — Local exploration data cache
-- ✅ Expanded from 2 to 3 ability sets in overview
-- ✅ Added "First-time Setup Guide" — initialization, first gacha crawl notice, exploration data init
-- ✅ Added "Scheduled Task Recommendation" — suggest updating related data when creating auto-tasks
-- ✅ QClaw platform tested (supports local import or Github import)
-
-### v1.0.1 (2026-06-26)
-
-- ✅ **New: First-time Init Workflow** — Auto-opens visible Chrome for manual login on first use or cookie expiry
-- ✅ New mandatory rule #9: first-time init must use visible Chrome (sole exception to headless default)
-- ✅ Unified Chrome user-data directory to `Cache\chrome_temp_profile\`, shared by SteamDB and Journal
-- ✅ Intent routing table now includes "First-time Init / Cookie Expired" trigger
-- ✅ Related output exception: daily tasks (stamina/digging/dailies) can be reported together
-
-### v1.0.0 (2026-06-25) — Initial Release
-
-- ✅ Integrated Steam Management and Journal Tools as two ability sets
-- ✅ SKILL.md follows Agent Skill standard format (YAML front matter + mandatory rules + intent routing table)
-- ✅ Unified `nuanskill-` script naming prefix
-- ✅ Single file: config embedded into `nuanskill-infi-manager.ps1`, removed `config.json` and `infi_steamdb_fetch.py`
-- ✅ 8 mandatory execution rules (time calculation, nickname mapping, data source priority, etc.)
-- ✅ Marvis platform tested
-- 📋 Pending: OpenClaw / WorkBuddy / QClaw platform tests
+Current version: **v1.3.1 (2026-06-28)**.
 
 ---
 

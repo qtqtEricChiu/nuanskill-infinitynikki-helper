@@ -1,6 +1,7 @@
 # 奇想手账 SteamDB 版本检测 — Agent 执行参考
 
 > **能力编号**：能力①
+> **窗口模式**：必须使用**可见 Chrome 窗口**（Cloudflare 人机验证无法通过无头模式）
 > ©mocabolka 2026. 本工具与 Valve / Steam、SteamDB、叠纸游戏 / Infold Games 无关。仅供学习交流使用，使用时请注意个人数据安全，时刻检测 Agent 文件操作安全性。
 
 > **前置提醒**：操作前必须提示用户在 Steam 客户端内完成：

@@ -19,7 +19,7 @@
 </p>
 
 <p align="center">
-  <sub>v1.1.0 · Windows 10/11 · Marvis / QClaw Tested · More Agents Adapting</sub>
+  <sub>v1.2.0 · Windows 10/11 · Marvis / QClaw Tested · More Agents Adapting</sub>
 </p>
 
 <p align="center">
@@ -83,7 +83,7 @@ The Agent will automatically run diagnostics and report results.
 
 ## Installation
 
-> v1.1.0 has been tested on **Marvis** and **QClaw**. Other platforms are theoretically supported.
+> v1.2.0 has been tested on **Marvis** and **QClaw**. Other platforms are theoretically supported.
 
 ### First-Time Setup
 
@@ -220,7 +220,7 @@ Auto-runs network diagnostics (Ping + DNS + Proxy check) when SteamDB access tim
 
 ### Journal Monitoring
 
-Access `https://myl.nuanpaper.com/tools/journal` via browser agent to:
+Access `https://myl.nuanpaper.com/tools/journal` via Chrome (`Cache\chrome_temp_profile\` dedicated profile) to:
 
 | Feature | Description |
 |---------|-------------|
@@ -351,7 +351,19 @@ A: No open-source license declared yet. Published as a public GitHub repository 
 
 ## Changelog
 
-### v1.1.0 (2026-06-26)
+### v1.2.0 (2026-06-27)
+
+- ✅ **New game knowledge base** — `references/nuanskill-game-knowledge.md`: dailies, gacha rules, world exploration, journal page structure
+- ✅ **Banner countdown support** — `current_banner_pool` in journal data, end-of-banner reminder template
+- ✅ **Full evolution rules** — `secondSuit.drawNum > 0` as the standard, documented in gacha-query + game-knowledge
+- ✅ **Limited banner complete rules** — Version cycles, rarity tiers, banner subtypes, item table, core rules
+- ✅ **Removed mandatory visible Chrome for localStorage** (headless confirmed working)
+- ✅ **Full references audit** — All 8 reference files cross-checked, no broken links
+- ✅ **Cleanup** — `nuan_session.json` and duplicate files removed
+
+### v1.1.1 (2026-06-27)
+
+### v1.1.0 (2026-06-27)
 
 - ✅ **New: Exploration Progress Query (Ability 3)** — Check warp spires, Whimstars, Inspiration Dews, and sub-region collectibles per region
 - ✅ New `references/nuanskill-explore-overview.md` — Exploration overview execution guide

@@ -1,5 +1,6 @@
 # 奇想手账 SteamDB 版本检测 — Agent 执行参考
 
+> **能力编号**：能力①
 > ©mocabolka 2026. 本工具与 Valve / Steam、SteamDB、叠纸游戏 / Infold Games 无关。仅供学习交流使用，使用时请注意个人数据安全，时刻检测 Agent 文件操作安全性。
 
 > **前置提醒**：操作前必须提示用户在 Steam 客户端内完成：
@@ -215,8 +216,6 @@ Agent **必须自动执行**以下清理（无需询问用户）：
 # 删除 ACF 备份
 Get-ChildItem (Join-Path $PSScriptRoot "backups") -Filter "appmanifest_3164330.acf.bak.*" -ErrorAction SilentlyContinue |
     ForEach-Object { Remove-Item $_.FullName -Force }
-# 删除 Chrome 用户目录（仅清理时执行，日常运行不删除）
-# 注意：统一目录为 Cache\chrome_temp_profile，与奇想手账共用
-$chromeDir = Join-Path $PSScriptRoot "Cache\chrome_temp_profile"
-if (Test-Path $chromeDir) { Remove-Item $chromeDir -Recurse -Force }
+# 注意：不清理 Cache\chrome_temp_profile，该目录为奇想手账与 SteamDB 共用，
+# 删除会导致其他能力的登录凭据丢失。仅清理 SteamDB 临时文件即可。
 ```

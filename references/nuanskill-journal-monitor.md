@@ -3,10 +3,19 @@
 > **能力编号**：能力②
 > **数据源**：https://myl.nuanpaper.com/tools/journal（日程便利贴标签页）
 > **依赖**：已登录的浏览器会话（cookie 见 {USER_DATA_DIR}nuan_profile.json）
+>
+> **本文索引**
+> - [前置条件](#前置条件)
+> - [体力监控](#1-体力监控)
+> - [美鸭梨挖掘](#2-美鸭梨挖掘)
+> - [日活 / 朝夕心愿](#3-日活--朝夕心愿-optional)
+> - [周本](#4-周本)
+> - [卡池倒计时](#5-卡池倒计时)
+> - [卡池剩余时间查询方法](#卡池剩余时间查询方法)
 
 ## 前置条件
 
-必须使用 NuanSkill 专用 Chrome（`Cache\chrome_temp_profile\` 凭据）访问页面，确保携带有效认证信息（`momoToken`、`momoOpenid` 等）。
+必须使用 NuanSkill 专用 Chrome（`{USER_DATA_DIR}chrome-profile\` 凭据）访问页面，确保携带有效认证信息（`momoToken`、`momoOpenid` 等）。
 
 ## 1. 体力监控
 
@@ -207,3 +216,6 @@
 适用场景：体力满格推算、美鸭梨完成时间、任何"预计 X 分钟后"的计算。
 
 > **强制**：体力回满时间推算时，必须基于刚实时抓取的当前体力值，严禁使用本地缓存中的旧体力值推算。若实时抓取失败，宁可告知用户无法获取数据，也不拿旧数据充数。
+---
+
+©mocabolka 2026. 与 Valve / Steam、SteamDB、叠纸游戏 / Infold Games 无关。仅供学习交流。

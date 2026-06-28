@@ -2,7 +2,9 @@
 
 > **能力编号**：通用（所有能力创建定时任务时参考）
 >
-> 当用户需要设置定时任务时，Agent 应主动推荐以下两个内置模板，并提供具体的配置参数。
+> **本文索引**
+> - [模板一：每日奇想手账监控](#模板一每日奇想手账监控能力)
+> - [模板二：每月抽卡记录更新](#模板二每月抽卡记录更新能力)
 
 ---
 
@@ -27,7 +29,7 @@
 | 项目 | 内容 |
 |------|------|
 | **频率** | 每月一次（建议每月 1 号执行） |
-| **执行动作** | Chrome（`Cache\chrome_temp_profile\`）访问 https://myl.nuanpaper.com/tools/journal/clothesPress |
+| **执行动作** | Chrome（`{USER_DATA_DIR}chrome-profile\`）访问 https://myl.nuanpaper.com/tools/journal/clothesPress |
 | **数据源 A** | React fiber → 写入 `{USER_DATA_DIR}nuan_gacha_stats.json`（抽卡统计汇总） |
 | **数据源 B** | localStorage → 写入 `{USER_DATA_DIR}nuan_gacha_history.json`（完整抽卡明细） |
 | **反馈** | 向用户汇报更新完成 |
@@ -61,3 +63,6 @@
 
 **Agent 引导话术**：
 > 「需要我设置一个当期卡池结束前一天的提醒吗？这样您就不会错过限时卡池的最后机会。」
+---
+
+©mocabolka 2026. 与 Valve / Steam、SteamDB、叠纸游戏 / Infold Games 无关。仅供学习交流。

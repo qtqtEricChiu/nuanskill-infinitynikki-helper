@@ -5,6 +5,13 @@
 > **核心原则**：用户数据与 Skill 代码分离，所有运行时产生的用户数据统一存放在 Agent 平台提供的用户数据目录中，Skill 内不硬编码任何平台路径或个人标识。
 >
 > Agent 写入 `{USER_DATA_DIR}` 下所有 JSON 文件时**必须严格遵循以下格式**，不得增删字段、改变字段名或嵌套层级。
+>
+> **本文索引**
+> - [目录约定与路径变量](#一目录约定)
+> - [各文件结构定义](#二各文件结构定义)
+> - [能力与数据依赖矩阵](#三skill-能力与数据依赖矩阵)
+> - [首次运行初始化逻辑](#四首次运行初始化逻辑)
+> - [数据写入规则](#五数据写入规则)
 
 ---
 
@@ -335,10 +342,10 @@ subprocess.Popen([
 
 | 能力 | 能力编号 | 依赖数据 | 读/写 | 需要用户手动登录 |
 |------|---------|---------|-------|----------------|
-| Steam 版本管理 | ① | 无 | - | 否 |
+| Steam 版本管理 | ① | chrome-profile | - | 否 |
 | 奇想手账监控 | ② | nuan_profile.json + chrome-profile | 读 / 写（nuan_journal.json） | 仅 Cookie 过期时 |
 | 探索进度查询 | ③ | chrome-profile | 读 / 写（nuan_explore.json） | 仅 Cookie 过期时 |
-| 抽卡查询 | ④ | nuan_gacha_stats.json / nuan_gacha_history.json | 读 / 写 | 仅初始抓取时 |
+| 抽卡查询 | ④ | nuan_gacha_stats.json + nuan_gacha_history.json | 读 / 写 | 仅初始抓取时 |
 | 公开信息 - 兑换码 | ⑤ | 无 | - | 否 |
 | 公开信息 - 氪条查询 | ⑤ | nuan_profile.json（support 分支）+ chrome-profile | 读 / 写（nuan_recharge_history.json） | 仅 Cookie 过期时 |
 
@@ -374,3 +381,6 @@ Agent 在首次使用 Skill 时触发：
 | 2 | **快照可覆盖** | `nuan_gacha_stats.json`、`nuan_gacha_history.json`、`nuan_journal.json`、`nuan_explore.json` 为最新快照，爬取时覆盖更新 |
 | 3 | **Cookie 只存 nuan_profile.json** | 禁止将 Cookie 写入其他文件或硬编码在脚本中 |
 | 4 | **路径统一变量** | 所有脚本统一引用 `USER_DATA_DIR` 常量，不得硬编码路径 |
+---
+
+©mocabolka 2026. 与 Valve / Steam、SteamDB、叠纸游戏 / Infold Games 无关。仅供学习交流。

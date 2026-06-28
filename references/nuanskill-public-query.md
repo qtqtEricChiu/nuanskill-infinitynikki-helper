@@ -2,6 +2,17 @@
 
 > **能力编号**：能力⑤
 > **功能**：兑换码查询 + 氪条查询
+> - 兑换码：无 Cookie 访问七鱼客服页面获取当前有效兑换码
+> - 氪条：可见 Chrome + Cookie 访问发票中心查询近 6 个月订单
+>
+> **本文索引**
+> - [用户提问 → 能力映射](#用户提问--能力映射)
+> - [通用规则](#通用规则能力)
+> - [前置条件](#前置条件)
+> - [操作流程（兑换码）](#操作流程)
+> - [关键发现](#关键发现)
+> - [已知限制](#已知限制)
+> - [氪条查询](#氪条查询充值记录)
 
 ---
 
@@ -140,7 +151,7 @@ https://support-infinitynikki.nuanpaper.com/invoice.html#/
 ### 操作流程
 
 ```
-1. CDP 连接可见 Chrome（复用 Cache\chrome_temp_profile\ 已有会话凭据）
+1. CDP 连接可见 Chrome（端口 9230，CDP 连接方法见 `references/nuanskill-browser.md`）
 2. 确认页面 URL 落在 #/（开票申请页），无需导航
 3. 定位日期选择器 .me-select-box.single-select
 4. click 展开下拉 → click「最近6个月的订单」（除非用户指定 1/3 个月）
@@ -192,4 +203,7 @@ XXXXXXXX	洒金礼盒	2026-03-03 01:08:20	136元
 | 1 | 无头不可用 | `aliyungf_tc` WAF 检测无头特征后拦截，httpOnly 无法注入 |
 | 2 | 等待不可靠 | 切换日期后无法用 `wait_for_selector`，数据通过异步 XHR 回填 |
 | 3 | Cookie 时效性 | `aliyungf_tc` 为 httpOnly 且经常刷新，不能跨会话复用注入 |
-| 4 | 登录态持久化 | 应复用可见 Chrome 的 user-data-dir 整体保存，而非单独存 cookie |
+| 4 | 登录态持久化 | 应复用可见 Chrome 的 user-data-dir 整体保存（见 browser.md），而非单独存 cookie |
+---
+
+©mocabolka 2026. 与 Valve / Steam、SteamDB、叠纸游戏 / Infold Games 无关。仅供学习交流。

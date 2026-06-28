@@ -4,6 +4,13 @@
 > **网页来源**：https://myl.nuanpaper.com/tools/journal/clothesPress
 > **本地数据库**：`{USER_DATA_DIR}nuan_gacha_stats.json`（主数据源，React fiber 直接爬取）
 > **辅助参考**：`{USER_DATA_DIR}nuan_gacha_history.json`（原始导出，三星已过滤）
+>
+> **本文索引**
+> - [用户提问 → 能力映射](#用户提问--能力映射)
+> - [能力④ 核心流程](#能力-核心流程)
+> - [数据源 A：React fiber](#数据源-a-react-fiber)
+> - [数据源 B：localStorage](#数据源-b-localstorage)
+> - [已知踩坑](#已知踩坑)
 
 ---
 
@@ -60,7 +67,7 @@
 **严禁使用 innerText/DOM 文本**，必须走 React fiber 获取原始数据：
 
 ```
-1. Chrome（`Cache\chrome_temp_profile\`） 访问 https://myl.nuanpaper.com/tools/journal/clothesPress
+1. Chrome（`{USER_DATA_DIR}chrome-profile\`） 访问 https://myl.nuanpaper.com/tools/journal/clothesPress
 2. 等待页面渲染完成（.cardWrpaper 元素出现）
 3. 遍历所有 .cardWrpaper 元素
 4. 读取 element.__reactFiber 进入 fiber 树
@@ -223,3 +230,6 @@ React fiber 直爬的套装抽卡统计。日常查询优先使用此文件。
 | 5 | 数据为静态快照，不会自动更新 | 注意 | 需定期重新跑一次 fiber 抓取 |
 
 > **一句话总结**：别碰 innerText、别信 DOM 文本，直接从 React fiber 偷数据。
+---
+
+©mocabolka 2026. 与 Valve / Steam、SteamDB、叠纸游戏 / Infold Games 无关。仅供学习交流。

@@ -2,8 +2,16 @@
 
 > **能力编号**：能力①
 > **窗口模式**：必须使用**可见 Chrome 窗口**（Cloudflare 人机验证无法通过无头模式）
-> ©mocabolka 2026. 本工具与 Valve / Steam、SteamDB、叠纸游戏 / Infold Games 无关。仅供学习交流使用，使用时请注意个人数据安全，时刻检测 Agent 文件操作安全性。
+>
+> **本文索引**
+> - [路径约定](#路径约定)
+> - [前置条件检查](#前置条件检查)
+> - [操作流程](#操作流程)
+> - [验证清单](#验证清单)
+> - [已知问题](#已知问题)
 
+> **任务目标**：检测并修复无限暖暖（AppID: 3164330）的 Steam 版本状态，确保 ACF 文件配置正确、版本最新、且已锁定只读。这是一个**从检测到锁定的线性流程**，Agent 应一次性完成。
+>
 > **前置提醒**：操作前必须提示用户在 Steam 客户端内完成：
 > **游戏库 → 右键游戏 → 属性 → 更新 → 自动更新 → 设为「等到我启动游戏时」**
 
@@ -78,33 +86,29 @@ if (-not $isChina) {
 | `BytesStaged` | 0 | 清零（同上） |
 | `SizeOnDisk` | 自动同步 | 更新时自动计算 |
 
-## SteamDB 数据获取（CDP 协议）
+## SteamDB 数据获取
+
+Chrome 启动、CDP 连接、Cloudflare 验证等通用浏览器操作详见：
+
+> **`references/nuanskill-browser.md`**
+
+本场景使用**端口 9222**、**可见窗口模式**，目标 URL 为 `https://steamdb.info/app/3164330/depots/`。
 
 ```powershell
-# 1. 查找 Chrome
-$chromeExe = "C:\Program Files\Google\Chrome\Application\chrome.exe"
-if (-not (Test-Path $chromeExe)) { $chromeExe = "C:\Program Files (x86)\Google\Chrome\Application\chrome.exe" }
+# 启动 Chrome（端口 9222，可见窗口）
+# 具体启动方法见 nuanskill-browser.md → 启动 Chrome
 
-# 2. 启动 Chrome（远程调试模式）
-$profileDir = Join-Path $PSScriptRoot "{USER_DATA_DIR}chrome-profile"
-Start-Process $chromeExe -ArgumentList @(
-    "--remote-debugging-port=9222",
-    "--user-data-dir=`"$profileDir`"",
-    "--no-first-run", "--no-default-browser-check",
-    "https://steamdb.info/app/3164330/depots/"
-) -WindowStyle Normal
+# 等待 CDP 就绪后导航到 manifests 页面
+$depotsText = await page.evaluate("document.body.innerText")
 
-# 3. 等待 CDP 就绪
-$maxWait = 30; $waited = 0
-while ($waited -lt $maxWait) {
-    try { $r = Invoke-RestMethod "http://127.0.0.1:9222/json/version" -ErrorAction Stop; break }
-    catch { Start-Sleep 1; $waited++ }
-}
+# 解析 Depots 页面 → BuildID
+$steamdbBuildID = [regex]::Match($depotsText, 'public\s+(\d+)').Groups[1].Value
+
+# 导航到 Manifests 页面 → Manifest GID
+await page.goto("https://steamdb.info/depot/3164332/manifests/")
+$manifestsText = await page.evaluate("document.body.innerText")
+$steamdbManifest = [regex]::Match($manifestsText, '(\d{19})').Groups[1].Value
 ```
-
-### Cloudflare 验证处理
-
-检测到 "Checking your browser" / "Just a moment" / "请稍候" 等关键词时，自动等待验证完成（最长 120 秒，每 2 秒检测一次）。
 
 ### 数据提取
 
@@ -220,3 +224,6 @@ Get-ChildItem (Join-Path $PSScriptRoot "backups") -Filter "appmanifest_3164330.a
 # 注意：不清理 {USER_DATA_DIR}chrome-profile，该目录为奇想手账与 SteamDB 共用，
 # 删除会导致其他能力的登录凭据丢失。仅清理 SteamDB 临时文件即可。
 ```
+---
+
+©mocabolka 2026. 与 Valve / Steam、SteamDB、叠纸游戏 / Infold Games 无关。仅供学习交流。

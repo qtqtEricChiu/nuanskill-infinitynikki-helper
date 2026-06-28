@@ -4,6 +4,17 @@
 
 ---
 
+## v1.4.0（2026-06-28）
+
+- **新增 Steam 商店资源下载能力**：通过 SteamDB 页面提取 / CDN 猜测 + 商店 API 双路径下载 7 类资产（capsule/hero/logo/header/背景等），自动打包 ZIP。新增 `references/nuanskill-steamdb-assets.md`
+- **新增通用浏览器参考**：`references/nuanskill-browser.md`，统一管理 Chrome 查找、CDP 连接、CF 验证、Cookie 提取、端口分配。所有需要浏览器的能力统一引用此文档
+- **新增意图路由**：浏览器通用、商店资源下载两条新路由
+- **防护类型完整文档化**：Cloudflare 基本 JS / Turnstile (non-interactive/interactive) / 阿里云 WAF 的判定方法与绕过策略
+- **SKILL.md 精简**：4 行 Steam 意图路由合并为 3 行，强调线性流程
+- **README 自然语言操作优化**：Steam 管理 8 行子能力合并为 1 个主入口 + 2 个子项
+- **残留路径清理**：5 篇 reference 中 7 处 `Cache\chrome_temp_profile` 旧路径修复为 `{USER_DATA_DIR}chrome-profile`
+- **已知问题重写**：从 11 条扩展为 27 条，按能力分组（通用/①/④/⑤）加标签，索引导航。各 reference 原有踩坑章节统一归入 known-issues.md，SKILL.md 阅读优先级新增「卡住了？查阅 known-issues.md」兜底指引
+
 ## v1.3.2（2026-06-28）
 
 - **全面重构用户数据持久化方案**：所有用户数据从 Skill 目录迁移至 `{USER_DATA_DIR}` 抽象路径，不硬编码 Agent 平台或用户标识

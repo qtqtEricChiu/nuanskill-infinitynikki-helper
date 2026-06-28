@@ -19,7 +19,7 @@
 </p>
 
 <p align="center">
-  <sub>v1.3.1 · Windows 10/11</sub>
+  <sub>v1.4.0 · Windows 10/11 · Marvis / QClaw Tested · More Agents Adapting</sub>
 </p>
 
 <p align="center">
@@ -32,7 +32,7 @@
 
 <p align="center">
   <strong>What Can NuanSkill Do?</strong><br /><br />
-  ▸ <strong>Steam Management</strong>: Forge ACF version info + auto-fetch latest BuildID/Manifest GID from SteamDB, one-click version sync<br />
+  ▸ <strong>Steam Management</strong>: Forge ACF version info + auto-fetch latest BuildID/Manifest GID from SteamDB, one-click version sync + asset download<br />
   ▸ <strong>Space Cleanup</strong>: Skeletonize Steam shell directory, external X6Game backup, restorable anytime<br />
   ▸ <strong>Journal Tools</strong>: Stamina reminders, Digging progress, Gacha record queries, Exploration progress — all via natural language<br />
   ▸ <strong>Public Info</strong>: Real-time coupon code query, Recharge history query (last 6 months order details)<br />
@@ -84,7 +84,7 @@ The Agent will automatically run diagnostics and report results.
 
 ## Installation
 
-> v1.3.2 has been tested on **Marvis** and **QClaw**. Other platforms are theoretically supported.
+> v1.4.0 has been tested on **Marvis** and **QClaw**. Other platforms are theoretically supported.
 
 ### First-Time Setup
 
@@ -146,16 +146,14 @@ Once the skill is imported, just talk to the Agent in natural language. Here are
 
 ### Steam Management
 
+Steam version repair is a **linear flow from detection to lock**. The Agent runs the full chain on any of these requests:
+
 | What You Want | Say This |
 |---------------|----------|
-| Check current version status | "Check the Steam version for Infinity Nikki" |
-| Update to latest | "Update ACF to the latest version" |
-| View ACF details | "Show full ACF info" |
-| Clean Steam directory space | "Clean up Steam directory space" |
-| Preview skeletonize | "Preview what files skeletonize would move" |
+| **Full version repair (recommended)** | "Check/update/fix the Steam version for Infinity Nikki" |
+| Check Steam status | "What's the Steam version status?" / "Show ACF" |
+| Clean space | "Clean up Steam directory space" / "Skeletonize" |
 | Restore X6Game | "Restore X6Game to the Steam directory" |
-| Lock/Unlock ACF | "Lock ACF" / "Unlock ACF" |
-| Full verification | "Run a full verification check" |
 
 ### Journal Tools
 
@@ -372,7 +370,7 @@ A: No open-source license declared yet. Published as a public GitHub repository 
 
 Full changelog available in `CHANGELOG.md`.
 
-Current version: **v1.3.2 (2026-06-28)**.
+Current version: **v1.4.0 (2026-06-28)**.
 
 ---
 

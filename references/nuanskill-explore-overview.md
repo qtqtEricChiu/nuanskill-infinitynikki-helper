@@ -3,10 +3,16 @@
 > **能力编号**：能力③
 > **数据源**：https://myl.nuanpaper.com/tools/journal（探索总览标签页）
 > **依赖**：已登录的浏览器会话（cookie 见 {USER_DATA_DIR}nuan_profile.json）
+>
+> **本文索引**
+> - [前置条件](#前置条件)
+> - [数据维度](#数据维度)
+> - [操作流程](#操作流程)
+> - [已知问题](#已知问题)
 
 ## 前置条件
 
-必须使用 NuanSkill 专用 Chrome（`Cache\chrome_temp_profile\` 凭据）访问页面，确保携带有效认证信息（`momoToken`、`momoOpenid` 等）。
+必须使用 NuanSkill 专用 Chrome（`{USER_DATA_DIR}chrome-profile\` 凭据）访问页面，确保携带有效认证信息（`momoToken`、`momoOpenid` 等）。
 
 ---
 
@@ -59,7 +65,7 @@
 ### 实时查询模式（用户主动询问）
 
 ```
-1. Chrome（`Cache\chrome_temp_profile\`）访问 https://myl.nuanpaper.com/tools/journal（无头 + Cookie 注入）
+1. Chrome（`{USER_DATA_DIR}chrome-profile\`）访问 https://myl.nuanpaper.com/tools/journal（无头 + Cookie 注入）
 2. 切换到「探索总览」标签页（第 2 个标签）
 3. 提取各区域的流转之柱、奇想星、灵感露珠、子区域收集项数据
 4. 按区域分组汇报 X/Y 格式的进度
@@ -69,7 +75,7 @@
 ### 定时更新模式（定时任务触发）
 
 ```
-1. Chrome（`Cache\chrome_temp_profile\`）访问 https://myl.nuanpaper.com/tools/journal（无头 + Cookie 注入）
+1. Chrome（`{USER_DATA_DIR}chrome-profile\`）访问 https://myl.nuanpaper.com/tools/journal（无头 + Cookie 注入）
 2. 切换到「探索总览」标签页
 3. 提取所有区域的探索数据
 4. 保存到 {USER_DATA_DIR}nuan_explore.json
@@ -249,3 +255,6 @@ Save-Json "{USER_DATA_DIR}nuan_explore.json" @{
 | 2 | **动态提取，禁止硬编码** | 区域名称、子区域收集项类型应从 DOM 提取，不可硬编码 |
 | 3 | **简洁输出** | 遵守 SKILL.md 第 10 条强制规则，只回答用户直接询问的内容 |
 | 4 | **缓存有效期** | 本地缓存超过 7 天或未命中用户查询的区域时，必须重新爬取 |
+---
+
+©mocabolka 2026. 与 Valve / Steam、SteamDB、叠纸游戏 / Infold Games 无关。仅供学习交流。

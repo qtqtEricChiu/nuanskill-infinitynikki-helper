@@ -207,7 +207,7 @@ $AppName    = $Cfg.AppName
 $GameDir    = Join-Path $GameLibrary "steamapps\common\Infinity Nikki"
 $AcfPath    = Join-Path $GameLibrary "steamapps\appmanifest_$AppID.acf"
 $BackupDir  = Join-Path $SkillRoot "backups"
-$ChromeProfileDir = Join-Path $SkillRoot "Cache\chrome_temp_profile"
+$ChromeProfileDir = Join-Path $SkillRoot "{USER_DATA_DIR}chrome-profile"
 
 # X6Game backup location: same drive as game library to avoid cross-partition moves
 $GameLibraryDrive = (Get-Item (Split-Path $GameLibrary -Parent)).PSDrive.Root
@@ -441,7 +441,7 @@ function Invoke-SteamDBCheck {
     Write-INFO "Local BuildID: $localBuildID"
     Write-INFO "Local Manifest: $localManifest"
     
-    # Create Chrome profile directory
+    # Create Chrome profile directory (placeholder, actual path set at runtime by Agent)
     if (-not (Test-Path $ChromeProfileDir)) {
         New-Item -ItemType Directory -Path $ChromeProfileDir -Force | Out-Null
         Write-INFO "Created Chrome profile: $ChromeProfileDir"

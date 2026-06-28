@@ -2,7 +2,7 @@
 
 > **能力编号**：能力③
 > **数据源**：https://myl.nuanpaper.com/tools/journal（探索总览标签页）
-> **依赖**：已登录的浏览器会话（cookie 见 user-data/nuan_cookie_nuanpaper.json）
+> **依赖**：已登录的浏览器会话（cookie 见 {USER_DATA_DIR}nuan_profile.json）
 
 ## 前置条件
 
@@ -63,7 +63,7 @@
 2. 切换到「探索总览」标签页（第 2 个标签）
 3. 提取各区域的流转之柱、奇想星、灵感露珠、子区域收集项数据
 4. 按区域分组汇报 X/Y 格式的进度
-5. 将数据保存到 user-data/nuan_explore_data.json（覆盖更新）
+5. 将数据保存到 {USER_DATA_DIR}nuan_explore.json（覆盖更新）
 ```
 
 ### 定时更新模式（定时任务触发）
@@ -72,7 +72,7 @@
 1. Chrome（`Cache\chrome_temp_profile\`）访问 https://myl.nuanpaper.com/tools/journal（无头 + Cookie 注入）
 2. 切换到「探索总览」标签页
 3. 提取所有区域的探索数据
-4. 保存到 user-data/nuan_explore_data.json
+4. 保存到 {USER_DATA_DIR}nuan_explore.json
 5. 不主动汇报，仅更新本地缓存
 ```
 
@@ -90,7 +90,7 @@
 
 ### 存储路径
 
-`user-data/nuan_explore_data.json`
+`{USER_DATA_DIR}nuan_explore.json`
 
 ### 数据结构
 
@@ -207,8 +207,8 @@ foreach ($card in $regionCards) {
     $regions[$regionName] = $regionData
 }
 
-# 保存 to user-data/nuan_explore_data.json
-Save-Json "user-data/nuan_explore_data.json" @{
+# 保存 to {USER_DATA_DIR}nuan_explore.json
+Save-Json "{USER_DATA_DIR}nuan_explore.json" @{
     "updated_at" = Get-Date -Format "yyyy-MM-ddTHH:mm:ss"
     "regions" = $regions
 }
@@ -245,7 +245,7 @@ Save-Json "user-data/nuan_explore_data.json" @{
 
 | # | 规则 | 说明 |
 |---|------|------|
-| 1 | **实时查询必须保存本地** | 每次用户询问时，爬取的数据必须保存到 `user-data/nuan_explore_data.json`，即使部分数据不在用户询问范围内 |
+| 1 | **实时查询必须保存本地** | 每次用户询问时，爬取的数据必须保存到 `{USER_DATA_DIR}nuan_explore.json`，即使部分数据不在用户询问范围内 |
 | 2 | **动态提取，禁止硬编码** | 区域名称、子区域收集项类型应从 DOM 提取，不可硬编码 |
 | 3 | **简洁输出** | 遵守 SKILL.md 第 10 条强制规则，只回答用户直接询问的内容 |
 | 4 | **缓存有效期** | 本地缓存超过 7 天或未命中用户查询的区域时，必须重新爬取 |

@@ -97,7 +97,7 @@
 | 第二套（满进） | 约 180 抽左右 | 约 80 抽 |
 | 与五星的关系 | 抽五星的过程中带出 | 独立抽取，与五星无关 |
 
-> 当用户问「XX套的陪跑四星是哪一套」时，Agent 应查 `nuan_gacha_history.json` 或 `nuan_gacha_stats.json` 中同一卡池 ID 的四星套装信息。
+> 当用户问「XX套的陪跑四星是哪一套」时，Agent 应查 `{USER_DATA_DIR}nuan_gacha_history.json` 或 `{USER_DATA_DIR}nuan_gacha_stats.json` 中同一卡池 ID 的四星套装信息。
 
 ### 抽取道具
 

@@ -19,7 +19,7 @@
 </p>
 
 <p align="center">
-  <sub>v1.3.1 · Windows 10/11 · Marvis / QClaw Tested · More Agents Adapting</sub>
+  <sub>v1.3.1 · Windows 10/11</sub>
 </p>
 
 <p align="center">
@@ -84,7 +84,7 @@ The Agent will automatically run diagnostics and report results.
 
 ## Installation
 
-> v1.3.1 has been tested on **Marvis** and **QClaw**. Other platforms are theoretically supported.
+> v1.3.2 has been tested on **Marvis** and **QClaw**. Other platforms are theoretically supported.
 
 ### First-Time Setup
 
@@ -249,18 +249,18 @@ Access the **Exploration Overview** tab (2nd tab) of the Journal to extract regi
 | Inspiration Dews | World collectible progress X/Y |
 | Sub-region Collectibles | Balloons/Crystals/Bubbles/Orbs/Jade items X/Y |
 
-> **Data saving**: Each query auto-saves all exploration data to `user-data/nuan_explore_data.json`. Cache valid for 7 days, can be refreshed via scheduled tasks.
+> **Data saving**: Each query auto-saves all exploration data to `{USER_DATA_DIR}nuan_explore.json`. Cache valid for 7 days, can be refreshed via scheduled tasks.
 
 ### Public Info Query
 
 Retrieve public information from two different sources via Chrome (`Cache\chrome_temp_profile\`):
 
-| Feature | Data Source | Description |
-|---------|-------------|-------------|
-| Coupon Codes | Qiyu customer service page (no Cookie) | Auto-fetch currently valid coupon code list, rewards, and expiry info |
-| Recharge History | Support invoice page (Cookie required) | Query last 6 months of recharge order details, results persisted to file |
+| Feature | Description |
+|---------|-------------|
+| Coupon Codes | Auto-fetch currently valid coupon code list, rewards, and expiry info |
+| Recharge History | Query last 6 months of recharge order details, results persisted to file |
 
-> **Recharge history persistence**: Each query result is automatically appended to `user-data/nuan_recharge_history.json` — append-only, never overwrite. Full traceability of past queries.
+> **Recharge history persistence**: Each query result is automatically appended to `{USER_DATA_DIR}nuan_recharge_history.json` — append-only, never overwrite. Full traceability of past queries.
 
 ---
 
@@ -301,7 +301,7 @@ Steam full-feature manager (single file, zero external dependencies, built-in co
 
 ### nuanskill-gacha-lookup.ps1
 
-Query outfit gacha stats (data source: `user-data/nuan_gacha_stats.json`):
+Query outfit gacha stats (data source: `{USER_DATA_DIR}nuan_gacha_stats.json`):
 
 ```powershell
 .\scripts\nuanskill-gacha-lookup.ps1 "Floral Poem"
@@ -329,8 +329,8 @@ Stamina refill prediction + Digging completion time:
 | 4 | Script auto-creates `.bak` backups in `backups\` directory before modifying ACF |
 | 5 | Skeletonize is a same-drive NTFS move, very fast, but won't cross drives |
 | 6 | Re-run `steamdb-check` after each official update |
-| 7 | Re-login to Journal when cookies expire, update `user-data/nuan_cookie_nuanpaper.json` |
-| 8 | **First gacha crawl is slow**: 5-15 minutes to traverse all history. Data saved to `user-data/nuan_gacha_stats.json` afterwards — subsequent queries are instant |
+| 7 | Re-login to Journal when cookies expire, update `{USER_DATA_DIR}nuan_profile.json` |
+| 8 | **First gacha crawl is slow**: 5-15 minutes to traverse all history. Data saved to `{USER_DATA_DIR}nuan_gacha_stats.json` afterwards — subsequent queries are instant |
 | 9 | **First-time manual login required**: Agent opens visible Chrome for Journal login (captcha included), then auto-extracts cookies |
 | 10 | **Scheduled task tip**: When creating auto-tasks (e.g., monthly gacha update), also update exploration data (`nuan_explore_data.json`) |
 | 11 | `Cache/` and `user-data/` excluded from version control (in `.gitignore`) |
@@ -372,7 +372,7 @@ A: No open-source license declared yet. Published as a public GitHub repository 
 
 Full changelog available in `CHANGELOG.md`.
 
-Current version: **v1.3.1 (2026-06-28)**.
+Current version: **v1.3.2 (2026-06-28)**.
 
 ---
 

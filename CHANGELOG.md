@@ -4,12 +4,23 @@
 
 ---
 
+## v1.3.2（2026-06-28）
+
+- **全面重构用户数据持久化方案**：所有用户数据从 Skill 目录迁移至 `{USER_DATA_DIR}` 抽象路径，不硬编码 Agent 平台或用户标识
+- **新增 `references/nuanskill-data-spec.md`**：合并原 data-format.md + data-persistence.md 为单文规范
+- **Cookie 文件升级为 `nuan_profile.json`**：子域名 key 化 + 时间戳条目 + 根级 `_note` 标注只增补
+- **新增 support token 回退策略**：myl.nuanpaper.com token 失效时可用 support 分支 token 登录
+- **SKILL.md 大幅精简**：删除重复的"初次使用引导"和"核心工作流"章节（内容已迁至各 reference），新增阅读优先级指引，总行数减少 ~32%
+- **新增阅读优先级**：明确 Agent 首次加载的阅读顺序
+- **文件引用全面修复**：`nuanskill-data-persistence.md` 死引用 → `nuanskill-data-spec.md`
+- **新增 `{USER_DATA_DIR}` 解析规则**：在 data-spec.md 定义多平台（Marvis/QClaw/OpenClaw/Claw/Chatwise/MindMac 等）路径解析表 + 环境变量优先级 + 通用回退方案
+
 ## v1.3.1（2026-06-28）
 
 - **新增氪条消费历史持久化存储**：每次查询氪条后自动追加到 `user-data/nuan_recharge_history.json`，含订单明细与汇总
-- **新增强制规则 #15**：数据内容只能增补，严禁覆写删除。`user-data/` 下所有标注"只能增补"的文件均受此规则约束
-- **新增数据格式**：`nuan_recharge_history.json` 格式规范（`references/nuanskill-data-format.md`）
-- **氪条查询流程补充**：`nuanskill-public-query.md` 增加第六步持久化存储流程
+- **新增强制规则 #15**：数据内容只能增补，严禁覆写删除
+- **新增数据格式**：`nuan_recharge_history.json` 格式规范
+- **氪条查询流程补充**：持久化存储步骤
 - **文件清单更新**：新增 `nuan_recharge_history.json`
 
 ---

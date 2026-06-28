@@ -2,7 +2,7 @@
 
 > **能力编号**：能力②
 > **数据源**：https://myl.nuanpaper.com/tools/journal（日程便利贴标签页）
-> **依赖**：已登录的浏览器会话（cookie 见 user-data/nuan_cookie_nuanpaper.json）
+> **依赖**：已登录的浏览器会话（cookie 见 {USER_DATA_DIR}nuan_profile.json）
 
 ## 前置条件
 
@@ -30,7 +30,7 @@
 
 > **注意**：优先使用页面提供的「预计回满文本」作为回满时间的直观参考，同时用 `剩余恢复时间` + `Get-Date` 交叉验证。两者矛盾时以页面文本为准。
 >
-> 当期卡池倒计时常态化写入 `user-data/nuan_journal_data.json` 的 `tabs.日程便利贴.current_banner_pool` 字段，供 Agent 随时查询卡池剩余时间。
+> 当期卡池倒计时常态化写入 `{USER_DATA_DIR}nuan_journal.json` 的 `tabs.日程便利贴.current_banner_pool` 字段，供 Agent 随时查询卡池剩余时间。
 
 ### 数据验证（必须执行）
 

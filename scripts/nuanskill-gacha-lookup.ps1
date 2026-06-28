@@ -3,7 +3,7 @@
     从 nuan_gacha_stats.json 按套装名称（正式名或关键词）查询抽卡数据。
 
 .DESCRIPTION
-    读取 user-data/nuan_gacha_stats.json，支持精确匹配和模糊匹配。
+    读取 {USER_DATA_DIR}nuan_gacha_stats.json，支持精确匹配和模糊匹配。
     模糊匹配返回所有名称或 category 中包含关键词的套装。
 
 .PARAMETER Name
@@ -45,7 +45,7 @@ param(
 
 $ScriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
 $SkillRoot = Split-Path -Parent $ScriptDir
-$jsonPath = Join-Path $SkillRoot "user-data\nuan_gacha_stats.json"
+$jsonPath = Join-Path $SkillRoot "{USER_DATA_DIR}nuan_gacha_stats.json"
 
 if (-not (Test-Path $jsonPath)) {
     Write-Error "数据文件不存在: $jsonPath"

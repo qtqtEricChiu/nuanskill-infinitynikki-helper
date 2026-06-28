@@ -2,8 +2,8 @@
 
 > **能力编号**：能力④
 > **网页来源**：https://myl.nuanpaper.com/tools/journal/clothesPress
-> **本地数据库**：`user-data/nuan_gacha_stats.json`（主数据源，React fiber 直接爬取）
-> **辅助参考**：`user-data/nuan_gacha_history.json`（原始导出，三星已过滤）
+> **本地数据库**：`{USER_DATA_DIR}nuan_gacha_stats.json`（主数据源，React fiber 直接爬取）
+> **辅助参考**：`{USER_DATA_DIR}nuan_gacha_history.json`（原始导出，三星已过滤）
 
 ---
 
@@ -11,11 +11,11 @@
 
 | 用户问 | 应执行动作 |
 |--------|-----------|
-| 「某套池子抽了多少抽」 | 直接查 `nuan_gacha_stats.json`（汇总统计数据已足够） |
-| 「某套池子抽了多少齐的」 | 直接查 `nuan_gacha_stats.json`（看 `total_resonance`） |
-| 「最后一件出的什么」「详情」 | 查 `nuan_gacha_history.json`（含每抽记录），或从 localStorage 提取完整历史 |
+| 「某套池子抽了多少抽」 | 直接查 `{USER_DATA_DIR}nuan_gacha_stats.json`（汇总统计数据已足够） |
+| 「某套池子抽了多少齐的」 | 直接查 `{USER_DATA_DIR}nuan_gacha_stats.json`（看 `total_resonance`） |
+| 「最后一件出的什么」「详情」 | 查 `{USER_DATA_DIR}nuan_gacha_history.json`（含每抽记录），或从 localStorage 提取完整历史 |
 | 「没有收录的新套装」 | 访问 clothesPress 实时抓取 |
-| 「当期卡池什么时候结束」 | 查 `user-data/nuan_journal_data.json` → `tabs.日程便利贴.current_banner_pool.ends_at`（每日监控自动更新） |
+| 「当期卡池什么时候结束」 | 查 `{USER_DATA_DIR}nuan_journal.json` → `tabs.日程便利贴.current_banner_pool.ends_at`（每日监控自动更新） |
 | 「初始化抽卡历史数据库」 | 走 localStorage 提取完整历史（含逐条抽卡记录） |
 
 ---
@@ -23,7 +23,7 @@
 ## 查询流程
 
 ```
-用户输入昵称 → ai_search 确认正式名 → nuan_gacha_stats.json 匹配 → 格式化输出
+用户输入昵称 → ai_search 确认正式名 → {USER_DATA_DIR}nuan_gacha_stats.json 匹配 → 格式化输出
               ↓ 未命中 → 实时访问 clothesPress 抓取并更新本地
 ```
 
@@ -31,7 +31,7 @@
 |------|------|------|
 | 1. 接收昵称 | 如「花套」「鸟套」「鱼套」 | 社区约定俗称的简称 |
 | 2. 联网确认 | 搜索「无限暖暖 + 昵称 + 套装」，搜到杂鱼结果不要停，按以下方法深挖：① 换「昵称 + 五星」「昵称 + 套装」等方向再搜；② 拿猜测的正式名反向搜索「正式名 + 昵称」交叉验证；③ 优先采信高权威来源（官网文章、正规游戏媒体），不要凭视觉印象做直觉判断；④ 多词条交叉验证后再确认，如「小红帽」同时搜「小红帽 无限暖暖」「她是不驯火 小红帽」锁定映射 | 确认正式名称，避免歧义 |
-| 3. 数据匹配 | 先查 `nuan_gacha_stats.json` 中按 `suit_name` 精确匹配 | 五星/四星各自独立数组 |
+| 3. 数据匹配 | 先查 `{USER_DATA_DIR}nuan_gacha_stats.json` 中按 `suit_name` 精确匹配 | 五星/四星各自独立数组 |
 | 4. 输出 | 返回统计信息 | 套装名、星级、平均共鸣、总计共鸣 |
 
 > ⚠️ **关键**：当用户问抽卡问题时，必须优先走能力④流程，首先查阅 `references/nuanskill-gacha-query.md`，不得使用其他能力的文档或凭记忆回答。
@@ -79,7 +79,7 @@
 
 ### 数据序列化
 
-按 `level` 分两组（五星 + 四星），序列化为 JSON，保存到 `user-data/nuan_gacha_stats.json`。
+按 `level` 分两组（五星 + 四星），序列化为 JSON，保存到 `{USER_DATA_DIR}nuan_gacha_stats.json`。
 
 > **写入格式**：必须严格按照 `SKILL.md` →「数据文件格式规范」→ `nuan_gacha_stats.json` 的字段结构写入，`rarity` 为数字（5/4）不可写成字符串。
 
@@ -121,7 +121,7 @@ localStorage.getItem('journal')
 | 元数据 | （从以上推算） | `total_draws`, `periodic_draws`, `permanent_draws`, `gacha_records_count`（=gacha_list.length） |
 
 ```
-6. 重组数据后序列化为 JSON 写入 user-data/nuan_gacha_history.json
+6. 重组数据后序列化为 JSON 写入 {USER_DATA_DIR}nuan_gacha_history.json
 ```
 
 > ⚠️ **关键**：`pool_summary` 中每个卡池的 `firstSuit`/`secondSuit` 数组包含逐部件的 `cloth_id` 和 `pool_cnt`，这是回答「某件衣服在第几抽出的」的精确依据。提取时**必须完整保留**这两个数组，不要只取外层元信息而丢掉部件明细。
@@ -198,7 +198,7 @@ React fiber 直爬的套装抽卡统计。日常查询优先使用此文件。
 ```
 1. 告知用户「第一次爬取抽卡记录需要 5-15 分钟，爬取完成后后续查询瞬间返回」
 2. 访问 clothesPress 走 React fiber 流程
-3. 保存到 user-data/nuan_gacha_stats.json
+3. 保存到 {USER_DATA_DIR}nuan_gacha_stats.json
 4. 提示用户初始化完成
 ```
 

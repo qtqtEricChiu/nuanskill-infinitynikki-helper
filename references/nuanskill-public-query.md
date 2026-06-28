@@ -132,7 +132,7 @@ https://support-infinitynikki.nuanpaper.com/invoice.html#/
 | 维度 | 兑换码查询（七鱼客服） | 氪条查询（support 发票页） |
 |------|---------------------|--------------------------|
 | 窗口模式 | 无头可用 | **必须可见 Chrome** |
-| Cookie 依赖 | 无需 Cookie | 依赖 `nuan_cookie_nuanpaper.json` 的 `support` 分支 |
+| Cookie 依赖 | 无需 Cookie | 依赖 `{USER_DATA_DIR}nuan_profile.json` 的 `support` 分支 |
 | 页面保护 | 无 | 阿里云 WAF 保护（无头无法通过） |
 
 > 与 myl 页面拉取流程相同：CDP 连接已有会话 → 定位 `support-infinitynikki.nuanpaper.com` 标签页。
@@ -151,7 +151,7 @@ https://support-infinitynikki.nuanpaper.com/invoice.html#/
 
 ### 第六步：持久化存储消费历史
 
-每次查询完成后，**必须**将本次查询结果追加到 `user-data/nuan_recharge_history.json`：
+每次查询完成后，**必须**将本次查询结果追加到 `{USER_DATA_DIR}nuan_recharge_history.json`：
 
 ```
 1. 读取现有文件（若不存在则初始化空结构）
@@ -160,10 +160,10 @@ https://support-infinitynikki.nuanpaper.com/invoice.html#/
 4. 写入后向用户汇报存储结果（简洁，如「消费历史已保存」）
 ```
 
-> ⚠️ **红线**：`user-data/nuan_recharge_history.json` **只能增补（append），严禁覆写或删除已有记录**。
+> ⚠️ **红线**：`{USER_DATA_DIR}nuan_recharge_history.json` **只能增补（append），严禁覆写或删除已有记录**。
 > - 同一时间范围重复查询时，每次均追加新记录，不可覆盖旧条目
 > - 查询结果为空时仍需追加一条 `order_count: 0`、`orders: []` 的空记录
-> - 格式规范详见 `references/nuanskill-data-format.md`
+> - 格式规范详见 `references/nuanskill-data-spec.md`
 
 ### 输出格式
 

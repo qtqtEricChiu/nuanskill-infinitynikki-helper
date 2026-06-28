@@ -86,7 +86,7 @@ $chromeExe = "C:\Program Files\Google\Chrome\Application\chrome.exe"
 if (-not (Test-Path $chromeExe)) { $chromeExe = "C:\Program Files (x86)\Google\Chrome\Application\chrome.exe" }
 
 # 2. 启动 Chrome（远程调试模式）
-$profileDir = Join-Path $PSScriptRoot "Cache\chrome_temp_profile"
+$profileDir = Join-Path $PSScriptRoot "{USER_DATA_DIR}chrome-profile"
 Start-Process $chromeExe -ArgumentList @(
     "--remote-debugging-port=9222",
     "--user-data-dir=`"$profileDir`"",
@@ -217,6 +217,6 @@ Agent **必须自动执行**以下清理（无需询问用户）：
 # 删除 ACF 备份
 Get-ChildItem (Join-Path $PSScriptRoot "backups") -Filter "appmanifest_3164330.acf.bak.*" -ErrorAction SilentlyContinue |
     ForEach-Object { Remove-Item $_.FullName -Force }
-# 注意：不清理 Cache\chrome_temp_profile，该目录为奇想手账与 SteamDB 共用，
+# 注意：不清理 {USER_DATA_DIR}chrome-profile，该目录为奇想手账与 SteamDB 共用，
 # 删除会导致其他能力的登录凭据丢失。仅清理 SteamDB 临时文件即可。
 ```

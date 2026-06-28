@@ -15,7 +15,7 @@
 | **数据提取** | 体力值 / 恢复倒计时 / 美鸭梨挖掘进度 / 朝夕心愿（日活） / 当期卡池剩余时间 |
 | **计算** | 体力回满时间 = `(350 - X) × 5 分钟` + `Get-Date`；挖掘完成时间按页面倒计时推算 |
 | **反馈** | 向用户推送体力回满预计时间和挖掘完成预计时间 |
-| **本地缓存** | 写入 `user-data/nuan_journal_data.json` |
+| **本地缓存** | 写入 `{USER_DATA_DIR}nuan_journal.json` |
 
 **Agent 引导话术**：
 > 「我已设置每日奇想手账监控，每天会自动检查体力、美鸭梨挖掘和日活状态，并在完成后推送给您。」
@@ -28,8 +28,8 @@
 |------|------|
 | **频率** | 每月一次（建议每月 1 号执行） |
 | **执行动作** | Chrome（`Cache\chrome_temp_profile\`）访问 https://myl.nuanpaper.com/tools/journal/clothesPress |
-| **数据源 A** | React fiber → 写入 `user-data/nuan_gacha_stats.json`（抽卡统计汇总） |
-| **数据源 B** | localStorage → 写入 `user-data/nuan_gacha_history.json`（完整抽卡明细） |
+| **数据源 A** | React fiber → 写入 `{USER_DATA_DIR}nuan_gacha_stats.json`（抽卡统计汇总） |
+| **数据源 B** | localStorage → 写入 `{USER_DATA_DIR}nuan_gacha_history.json`（完整抽卡明细） |
 | **反馈** | 向用户汇报更新完成 |
 | **注意事项** | localStorage 提取使用无头 Chrome 即可，无需弹窗 |
 
